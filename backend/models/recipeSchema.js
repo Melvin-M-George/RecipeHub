@@ -15,11 +15,9 @@ const recipeScheme = new mongoose.Schema({
     },
     time:{
         type:String,
-        required:true
     },
     converImage:{
         type:String,
-        required:true
     }
 }, { timestamps: true });
 
