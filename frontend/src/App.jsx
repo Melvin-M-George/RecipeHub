@@ -1,16 +1,31 @@
 import React from "react";
 import "./App.css";
-import {createBrowserRouter, RouterProvider} from "react-router-dom"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import Home from "./pages/Home";
+import MainNavigation from "./components/MainNavigation";
+import axios, { all } from "axios";
+
+const getAllRecipes = async () => {
+  let allRecipes = [];
+  await axios.get("http://localhost:5000/recipes").then((res)=>{
+    allRecipes = res.data;
+  })
+  return allRecipes;
+}
 
 const router = createBrowserRouter([
-  { path: "/",element: <Home/>}
+  {
+    path: "/", element: <MainNavigation />, children: [
+      { path: "/", element: <Home /> ,loader: getAllRecipes}
+    ]
+  },
+
 ])
 
 export default function App() {
   return (
-   <> 
-   <RouterProvider router={router} />
-   </>
+    <>
+      <RouterProvider router={router} />
+    </>
   );
 }
